@@ -2,22 +2,16 @@ import React, {useState} from "react";
 import CommentDisplay from "./CommentDisplay";
 
 function Comments({comments}){
-    const [viewComments, setViewComments] = useState(comments)
+    const [isHidingComments, setIsHidingComments] = useState(false)
     function handleComments(){
-        const toggleComment = (viewComments? [null] : [comments] )
-        setViewComments(toggleComment)
+        setIsHidingComments(!isHidingComments)
+        
       }
-      console.log(viewComments)
-    const separateComments = viewComments.map(item =>{
-        if(item === null){
-            return (<></>)
-        }else{
-        return(<CommentDisplay key={item.id} user={item.user} comment={item.comment}/> )
-        }
-    })
+    //   console.log(isHidingComments)
+    const separateComments = isHidingComments ? null : (comments.map(item =><CommentDisplay key={item.id} user={item.user} comment={item.comment}/>));
     return(
         <>
-            <button onClick={handleComments}>Hide Comments</button>
+            <button onClick={handleComments}>{isHidingComments?"Show Comments":"Hide Comments" }</button>
             <br></br>
             <h2>Comments</h2>
             {separateComments}
